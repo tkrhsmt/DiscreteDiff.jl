@@ -3,6 +3,9 @@ uuid = "0319a5b0-be78-48ba-ae28-23bf1258ad2f"
 authors = ["tkrhsmt@gmail.com"]
 version = "1.0.0-DEV"
 
+[deps]
+OffsetArrays = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
+
 [compat]
 julia = "1.10"
 
