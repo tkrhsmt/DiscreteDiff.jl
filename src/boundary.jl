@@ -6,23 +6,23 @@
 
 using OffsetArrays
 
-function add_boundary(u, adn, bx1, bxe, by1, bye, bz1, bze, dirichlet)
+function add_boundary(u, adnx, adny, adnz, bx1, bxe, by1, bye, bz1, bze, dirichlet)
 
     #元の配列の大きさ
     nx, ny, nz = size(u)
 
     #境界を代入する配列の作成
-    temp = zeros(nx + 2 * adn, ny + 2 * adn, nz + 2 * adn)
-    unew = OffsetArray(temp, 1-adn:nx+adn, 1-adn:ny+adn, 1-adn:nz+adn)
+    temp = zeros(nx + 2 * adnx, ny + 2 * adny, nz + 2 * adnz)
+    unew = OffsetArray(temp, 1-adnx:nx+adnx, 1-adny:ny+adny, 1-adnz:nz+adnz)
     temp = nothing
 
     #ずらした配列の最初と最後の番号
-    xb = 1 - adn
-    yb = 1 - adn
-    zb = 1 - adn
-    xe = nx + adn
-    ye = ny + adn
-    ze = nz + adn
+    xb = 1 - adnx
+    yb = 1 - adny
+    zb = 1 - adnz
+    xe = nx + adnx
+    ye = ny + adny
+    ze = nz + adnz
 
     #元の配列を代入
     unew[1:nx, 1:ny, 1:nz] = u
@@ -31,53 +31,53 @@ function add_boundary(u, adn, bx1, bxe, by1, bye, bz1, bze, dirichlet)
 
     if bx1 == 0 #x方向の境界1
         # xb:0の配列に代入
-        unew[xb:0, 1:ny, 1:nz] = u[nx-adn:nx, 1:ny, 1:nz]
-        unew[xb:0, yb:0, 1:nz] = u[nx-adn:nx, ny-adn:ny, 1:nz]
-        unew[xb:0, 1:ny, zb:0] = u[nx-adn:nx, 1:ny, nz-adn:nz]
-        unew[xb:0, ny+1:ye, 1:nz] = u[nx-adn:nx, 1:adn, 1:nz]
-        unew[xb:0, 1:ny, nz+1:ze] = u[nx-adn:nx, 1:nz, 1:adn]
-        unew[xb:0, yb:0, zb:0] = u[nx-adn:nx, ny-adn:ny, nz-adn:nz]
-        unew[xb:0, yb:0, nz+1:ze] = u[nx-adn:nx, ny-adn:ny, 1:adn]
-        unew[xb:0, ny+1:ye, zb:0] = u[nx-adn:nx, 1:adn, nz-adn:nz]
-        unew[xb:0, ny+1:ye, nz+1:ze] = u[nx-adn:nx, 1:adn, 1:adn]
+        unew[xb:0, 1:ny, 1:nz] = u[nx-adnx+1:nx, 1:ny, 1:nz]
+        unew[xb:0, yb:0, 1:nz] = u[nx-adnx+1:nx, ny-adny+1:ny, 1:nz]
+        unew[xb:0, 1:ny, zb:0] = u[nx-adnx+1:nx, 1:ny, nz-adnz+1:nz]
+        unew[xb:0, ny+1:ye, 1:nz] = u[nx-adnx+1:nx, 1:adny, 1:nz]
+        unew[xb:0, 1:ny, nz+1:ze] = u[nx-adnx+1:nx, 1:ny, 1:adnz]
+        unew[xb:0, yb:0, zb:0] = u[nx-adnx+1:nx, ny-adny+1:ny, nz-adnz+1:nz]
+        unew[xb:0, yb:0, nz+1:ze] = u[nx-adnx+1:nx, ny-adny+1:ny, 1:adnz]
+        unew[xb:0, ny+1:ye, zb:0] = u[nx-adnx+1:nx, 1:adny, nz-adnz+1:nz]
+        unew[xb:0, ny+1:ye, nz+1:ze] = u[nx-adnx+1:nx, 1:adny, 1:adnz]
     end
 
     if bxe == 0 #x方向の境界2
         # nx+1:xeの配列に代入
-        unew[nx+1:xe, 1:ny, 1:nz] = u[1:adn, 1:ny, 1:nz]
-        unew[nx+1:xe, yb:0, 1:nz] = u[1:adn, ny-adn:ny, 1:nz]
-        unew[nx+1:xe, 1:ny, zb:0] = u[1:adn, 1:ny, nz-adn:nz]
-        unew[nx+1:xe, ny+1:ye, 1:nz] = u[1:adn, 1:adn, 1:nz]
-        unew[nx+1:xe, 1:ny, nz+1:ze] = u[1:adn, 1:nz, 1:adn]
-        unew[nx+1:xe, yb:0, zb:0] = u[1:adn, ny-adn:ny, nz-adn:nz]
-        unew[nx+1:xe, yb:0, nz+1:ze] = u[1:adn, ny-adn:ny, 1:adn]
-        unew[nx+1:xe, ny+1:ye, zb:0] = u[1:adn, 1:adn, nz-adn:nz]
-        unew[nx+1:xe, ny+1:ye, nz+1:ze] = u[1:adn, 1:adn, 1:adn]
+        unew[nx+1:xe, 1:ny, 1:nz] = u[1:adnx, 1:ny, 1:nz]
+        unew[nx+1:xe, yb:0, 1:nz] = u[1:adnx, ny-adny+1:ny, 1:nz]
+        unew[nx+1:xe, 1:ny, zb:0] = u[1:adnx, 1:ny, nz-adnz+1:nz]
+        unew[nx+1:xe, ny+1:ye, 1:nz] = u[1:adnx, 1:adny, 1:nz]
+        unew[nx+1:xe, 1:ny, nz+1:ze] = u[1:adnx, 1:ny, 1:adnz]
+        unew[nx+1:xe, yb:0, zb:0] = u[1:adnx, ny-adny+1:ny, nz-adnz+1:nz]
+        unew[nx+1:xe, yb:0, nz+1:ze] = u[1:adnx, ny-adny+1:ny, 1:adnz]
+        unew[nx+1:xe, ny+1:ye, zb:0] = u[1:adnx, 1:adny, nz-adnz+1:nz]
+        unew[nx+1:xe, ny+1:ye, nz+1:ze] = u[1:adnx, 1:adny, 1:adnz]
 
     end
 
     if by1 == 0 #y方向の境界1
         # yb:0の配列に代入
-        unew[1:nx, yb:0, 1:nz] = u[1:nx, ny-adn:ny, 1:nz]
-        unew[1:nx, yb:0, zb:0] = u[1:nx, ny-adn:ny, nz-adn:nz]
-        unew[1:nx, yb:0, nz+1:ze] = u[1:nx, ny-adn:ny, 1:adn]
+        unew[1:nx, yb:0, 1:nz] = u[1:nx, ny-adny+1:ny, 1:nz]
+        unew[1:nx, yb:0, zb:0] = u[1:nx, ny-adny+1:ny, nz-adnz+1:nz]
+        unew[1:nx, yb:0, nz+1:ze] = u[1:nx, ny-adny+1:ny, 1:adnz]
     end
 
     if bye == 0 #y方向の境界2
         # ny+1:yeの配列に代入
-        unew[1:nx, ny+1:ye, 1:nz] = u[1:nx, 1:adn, 1:nz]
-        unew[1:nx, ny+1:ye, zb:0] = u[1:nx, 1:adn, nz-adn:nz]
-        unew[1:nx, ny+1:ye, nz+1:ze] = u[1:nx, 1:adn, 1:adn]
+        unew[1:nx, ny+1:ye, 1:nz] = u[1:nx, 1:adny, 1:nz]
+        unew[1:nx, ny+1:ye, zb:0] = u[1:nx, 1:adny, nz-adnz+1:nz]
+        unew[1:nx, ny+1:ye, nz+1:ze] = u[1:nx, 1:adny, 1:adnz]
     end
 
     if bz1 == 0 #z方向の境界1
         # zb:0の配列に代入
-        unew[1:nx, 1:ny, zb:0] = u[1:nx, 1:ny, nz-adn:nz]
+        unew[1:nx, 1:ny, zb:0] = u[1:nx, 1:ny, nz-adnz+1:nz]
     end
 
     if bze == 0 #z方向の境界2
         # zb:0の配列に代入
-        unew[1:nx, 1:ny, nz+1:ze] = u[1:nx, 1:ny, 1:adn]
+        unew[1:nx, 1:ny, nz+1:ze] = u[1:nx, 1:ny, 1:adnz]
     end
 
     # ノイマン境界 ----------------------------------------
