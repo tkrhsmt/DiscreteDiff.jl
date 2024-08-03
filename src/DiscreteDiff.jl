@@ -7,4 +7,8 @@ include("boundary.jl")
 
 include("center.jl")
 
+include("scheme.jl")
+
+include("compact.jl")
+
 end
