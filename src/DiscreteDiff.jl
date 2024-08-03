@@ -1,7 +1,7 @@
 module DiscreteDiff
 
 # Write your package code here.
-export d1x
+export d1x, d1y, d1z
 
 include("boundary.jl")
 
