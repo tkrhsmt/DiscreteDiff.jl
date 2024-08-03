@@ -11,6 +11,8 @@ function d1x(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d1x(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d1x(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d1x(u, dx, boundary, dirichlet)
     end
 
 end
@@ -23,6 +25,8 @@ function d1y(u, dy, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d1y(u, dy, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d1y(u, dy, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d1y(u, dx, boundary, dirichlet)
     end
 
 end
@@ -35,6 +39,8 @@ function d1z(u, dz, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d1z(u, dz, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d1z(u, dz, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d1z(u, dx, boundary, dirichlet)
     end
 
 end
