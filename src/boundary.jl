@@ -5,7 +5,37 @@
 # ==================================================
 
 using OffsetArrays
+"""
+    add_boundary(u, adnx, adny, adnz, bx1, bxe, by1, bye, bz1, bze, dirichlet)
 
+Add boundary conditions to a 3D array.
+
+# Arguments
+- `u::Array`: The input 3D array.
+- `adnx::Int`: The number of cells to add to the x-direction boundary.
+- `adny::Int`: The number of cells to add to the y-direction boundary.
+- `adnz::Int`: The number of cells to add to the z-direction boundary.
+- `bx1::Int`: The boundary condition type for the lower x boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `bxe::Int`: The boundary condition type for the upper x boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `by1::Int`: The boundary condition type for the lower y boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `bye::Int`: The boundary condition type for the upper y boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `bz1::Int`: The boundary condition type for the lower z boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `bze::Int`: The boundary condition type for the upper z boundary (0: periodic, 1: Neumann, 2: Dirichlet).
+- `dirichlet::Vector`: The values to be used for Dirichlet boundary conditions, if applicable.
+
+# Returns
+- `OffsetArray`: The array with boundaries added according to the specified conditions.
+
+# Examples
+```julia
+u = rand(4, 4, 4)
+adnx, adny, adnz = 1, 1, 1
+bx1, bxe, by1, bye, bz1, bze = 0, 0, 1, 1, 2, 2
+dirichlet = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0]
+
+new_array = add_boundary(u, adnx, adny, adnz, bx1, bxe, by1, bye, bz1, bze, dirichlet)
+````
+"""
 function add_boundary(u, adnx, adny, adnz, bx1, bxe, by1, bye, bz1, bze, dirichlet)
 
     #元の配列の大きさ

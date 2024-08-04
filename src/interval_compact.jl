@@ -1,4 +1,25 @@
+"""
+Perform 6th-order compact finite difference interpolation in the x-direction.
 
+# Arguments
+- `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
+- `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
+- `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+
+# Returns
+- `du::Array{T}`: Interpolated 3D array of values in the x-direction using 6th-order compact finite difference interpolation.
+
+# Description
+The `compact_6_intx` function applies a 6th-order compact finite difference scheme to compute the interpolated values in the x-direction for the input data `u`. The function first adds boundary conditions to the input array `u` using the `add_boundary` function. It then constructs and solves a tridiagonal system using either cyclic or standard Thomas algorithm, depending on the boundary conditions specified by `bo`.
+
+- If `bo[1]` is 0, cyclic boundary conditions are used.
+- If `bo[1]` or `bo[2]` is 1, Neumann boundary conditions are applied.
+- If `bo[1]` or `bo[2]` is 2, Dirichlet boundary conditions are applied.
+
+The coefficients for the tridiagonal system are defined by the constants `α`, `d`, `a`, `b`, and `c`.
+
+Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
+"""
 function compact_6_intx(u, bo, dirichlet)
 
     nx, ny, nz = size(u)
@@ -49,7 +70,28 @@ function compact_6_intx(u, bo, dirichlet)
     return du
 end
 
+"""
+Perform 6th-order compact finite difference interpolation in the y-direction.
 
+# Arguments
+- `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
+- `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
+- `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+
+# Returns
+- `du::Array{T}`: Interpolated 3D array of values in the y-direction using 6th-order compact finite difference interpolation.
+
+# Description
+The `compact_6_inty` function applies a 6th-order compact finite difference scheme to compute the interpolated values in the y-direction for the input data `u`. The function first adds boundary conditions to the input array `u` using the `add_boundary` function. It then constructs and solves a tridiagonal system using either cyclic or standard Thomas algorithm, depending on the boundary conditions specified by `bo`.
+
+- If `bo[3]` is 0, cyclic boundary conditions are used.
+- If `bo[3]` or `bo[4]` is 1, Neumann boundary conditions are applied.
+- If `bo[3]` or `bo[4]` is 2, Dirichlet boundary conditions are applied.
+
+The coefficients for the tridiagonal system are defined by the constants `α`, `d`, `a`, `b`, and `c`.
+
+Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
+"""
 function compact_6_inty(u, bo, dirichlet)
 
     nx, ny, nz = size(u)
@@ -100,7 +142,28 @@ function compact_6_inty(u, bo, dirichlet)
     return du
 end
 
+"""
+Perform 6th-order compact finite difference interpolation in the z-direction.
 
+# Arguments
+- `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
+- `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
+- `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+
+# Returns
+- `du::Array{T}`: Interpolated 3D array of values in the z-direction using 6th-order compact finite difference interpolation.
+
+# Description
+The `compact_6_intz` function applies a 6th-order compact finite difference scheme to compute the interpolated values in the z-direction for the input data `u`. The function first adds boundary conditions to the input array `u` using the `add_boundary` function. It then constructs and solves a tridiagonal system using either cyclic or standard Thomas algorithm, depending on the boundary conditions specified by `bo`.
+
+- If `bo[5]` is 0, cyclic boundary conditions are used.
+- If `bo[5]` or `bo[6]` is 1, Neumann boundary conditions are applied.
+- If `bo[5]` or `bo[6]` is 2, Dirichlet boundary conditions are applied.
+
+The coefficients for the tridiagonal system are defined by the constants `α`, `d`, `a`, `b`, and `c`.
+
+Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
+"""
 function compact_6_intz(u, bo, dirichlet)
 
     nx, ny, nz = size(u)

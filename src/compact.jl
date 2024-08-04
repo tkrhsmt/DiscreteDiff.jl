@@ -1,15 +1,17 @@
 
-
 """
-    compact_6_d1x(u,dx)
-    差分法を利用したx方向1階微分
+    compact_6_d1x(u, dx, boundary, dirichlet)
 
-境界条件：周期境界
-差分法：6次compact差分
+Calculate the first derivative in the x direction using 6th order compact difference.
 
 # Arguments
-- `u` : 微分を求める配列
-- `dx` : x方向の分割幅
+- `u::Array`: The input 3D array.
+- `dx::Number`: The distance between points in the x direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The first derivative in the x direction.
 """
 function compact_6_d1x(u, dx, bo, dirichlet)
 
@@ -54,15 +56,18 @@ end
 
 
 """
-    compact_6_d1y(u,dx)
-    差分法を利用したy方向1階微分
+    compact_6_d1y(u, dy, boundary, dirichlet)
 
-境界条件：周期境界
-差分法：6次compact差分
+Calculate the first derivative in the y direction using 6th order compact difference.
 
 # Arguments
-- `u` : 微分を求める配列
-- `dx` : y方向の分割幅
+- `u::Array`: The input 3D array.
+- `dy::Number`: The distance between points in the y direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The first derivative in the y direction.
 """
 function compact_6_d1y(u, dx, bo, dirichlet)
 
@@ -107,15 +112,18 @@ end
 
 
 """
-    compact_6_d1z(u,dx)
-    差分法を利用したz方向1階微分
+    compact_6_d1z(u, dz, boundary, dirichlet)
 
-境界条件：周期境界
-差分法：6次compact差分
+Calculate the first derivative in the z direction using 6th order compact difference.
 
 # Arguments
-- `u` : 微分を求める配列
-- `dx` : z方向の分割幅
+- `u::Array`: The input 3D array.
+- `dz::Number`: The distance between points in the z direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The first derivative in the z direction.
 """
 function compact_6_d1z(u, dx, bo, dirichlet)
 
@@ -158,6 +166,20 @@ function compact_6_d1z(u, dx, bo, dirichlet)
     return du
 end
 
+"""
+    center_2_d2x(u, dx, boundary, dirichlet)
+
+Calculate the second derivative in the x direction using 6th order compact difference.
+
+# Arguments
+- `u::Array`: The input 3D array.
+- `dx::Number`: The distance between points in the x direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The second derivative in the x direction.
+"""
 function compact_6_d2x(u, dx, bo, dirichlet)
 
     nx, ny, nz = size(u)
@@ -195,6 +217,20 @@ function compact_6_d2x(u, dx, bo, dirichlet)
     return du
 end
 
+"""
+    center_2_d2y(u, dx, boundary, dirichlet)
+
+Calculate the second derivative in the y direction using 6th order compact difference.
+
+# Arguments
+- `u::Array`: The input 3D array.
+- `dx::Number`: The distance between points in the y direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The second derivative in the y direction.
+"""
 function compact_6_d2y(u, dx, bo, dirichlet)
 
     nx, ny, nz = size(u)
@@ -232,6 +268,20 @@ function compact_6_d2y(u, dx, bo, dirichlet)
     return du
 end
 
+"""
+    center_2_d2z(u, dx, boundary, dirichlet)
+
+Calculate the second derivative in the z direction using 6th order compact difference.
+
+# Arguments
+- `u::Array`: The input 3D array.
+- `dx::Number`: The distance between points in the z direction.
+- `boundary::Array`: The boundary conditions.
+- `dirichlet::Array`: The values for Dirichlet boundary conditions.
+
+# Returns
+- `Array`: The second derivative in the z direction.
+"""
 function compact_6_d2z(u, dx, bo, dirichlet)
 
     nx, ny, nz = size(u)
