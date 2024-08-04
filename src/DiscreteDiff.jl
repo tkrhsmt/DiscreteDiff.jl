@@ -17,4 +17,6 @@ include("interval_compact.jl")
 
 include("interval_diff.jl")
 
+include("interval_compact_diff.jl")
+
 end

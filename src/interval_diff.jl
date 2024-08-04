@@ -11,6 +11,8 @@ function int_d1x(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0
         return center_int_4_d1x(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間差分
         return center_int_6_d1x(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間差分
+        return compact_6_int_d1x(u, dx, boundary, dirichlet)
     end
 end
 
@@ -22,6 +24,8 @@ function int_d1y(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0
         return center_int_4_d1y(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間差分
         return center_int_6_d1y(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間差分
+        return compact_6_int_d1y(u, dx, boundary, dirichlet)
     end
 end
 
@@ -33,6 +37,8 @@ function int_d1z(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0
         return center_int_4_d1z(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間差分
         return center_int_6_d1z(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間差分
+        return compact_6_int_d1z(u, dx, boundary, dirichlet)
     end
 end
 
