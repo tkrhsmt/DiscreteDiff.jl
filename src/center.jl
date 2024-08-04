@@ -57,8 +57,8 @@ function d2x(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d2x(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d2x(u, dx, boundary, dirichlet)
-    #elseif scheme == 4 #6次compact差分
-    #    return compact_6_d2x(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d2x(u, dx, boundary, dirichlet)
     end
 
 end
@@ -71,8 +71,8 @@ function d2y(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d2y(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d2y(u, dx, boundary, dirichlet)
-    #elseif scheme == 4 #6次compact差分
-    #    return compact_6_d2y(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d2y(u, dx, boundary, dirichlet)
     end
 
 end
@@ -85,8 +85,8 @@ function d2z(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 
         return center_4_d2z(u, dx, boundary, dirichlet)
     elseif scheme == 3 #6次中心差分
         return center_6_d2z(u, dx, boundary, dirichlet)
-    #elseif scheme == 4 #6次compact差分
-    #    return compact_6_d2z(u, dx, boundary, dirichlet)
+    elseif scheme == 4 #6次compact差分
+        return compact_6_d2z(u, dx, boundary, dirichlet)
     end
 
 end
