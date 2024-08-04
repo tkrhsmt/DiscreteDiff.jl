@@ -10,6 +10,8 @@ function intx(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0
         return int_4_x(u, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間
         return int_6_x(u, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間
+        return compact_6_intx(u, boundary, dirichlet)
     end
 end
 
@@ -21,6 +23,8 @@ function inty(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0
         return int_4_y(u, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間
         return int_6_y(u, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間
+        return compact_6_inty(u, boundary, dirichlet)
     end
 end
 
@@ -32,6 +36,8 @@ function intz(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0
         return int_4_z(u, boundary, dirichlet)
     elseif scheme == 3 #6次中心補間
         return int_6_z(u, boundary, dirichlet)
+    elseif scheme == 4 #6次compact補間
+        return compact_6_intz(u, boundary, dirichlet)
     end
 end
 

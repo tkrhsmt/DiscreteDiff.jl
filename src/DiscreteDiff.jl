@@ -13,4 +13,6 @@ include("compact.jl")
 
 include("interval.jl")
 
+include("interval_compact.jl")
+
 end
