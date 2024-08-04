@@ -36,7 +36,7 @@ function compact_6_intx(u, bo, dirichlet)
                     B[1] -= dirichlet[1] * α
                 end
                 if bo[2] == 1 #ノイマン条件
-                    B[1] -= ub[nx+1, j, k] * α
+                    B[nx] -= ub[nx+1, j, k] * α
                 elseif bo[2] == 2 # ディリクレ条件
                     B[nx] -= dirichlet[2] * α
                 end
@@ -87,9 +87,9 @@ function compact_6_inty(u, bo, dirichlet)
                     B[1] -= dirichlet[3] * α
                 end
                 if bo[4] == 1 #ノイマン条件
-                    B[1] -= ub[i, ny+1, k] * α
+                    B[ny] -= ub[i, ny+1, k] * α
                 elseif bo[4] == 2 # ディリクレ条件
-                    B[nx] -= dirichlet[4] * α
+                    B[ny] -= dirichlet[4] * α
                 end
                 du[i, :, k] = Thomas(Aa, Ab, Ac, B)
             end
@@ -138,9 +138,9 @@ function compact_6_intz(u, bo, dirichlet)
                     B[1] -= dirichlet[5] * α
                 end
                 if bo[6] == 1 #ノイマン条件
-                    B[1] -= ub[i, j, nz+1] * α
+                    B[nz] -= ub[i, j, nz+1] * α
                 elseif bo[6] == 2 # ディリクレ条件
-                    B[nx] -= dirichlet[6] * α
+                    B[nz] -= dirichlet[6] * α
                 end
                 du[i, j, :] = Thomas(Aa, Ab, Ac, B)
             end
