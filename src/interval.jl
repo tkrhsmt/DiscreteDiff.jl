@@ -1,6 +1,6 @@
 center_2_int(u1, u2) = (u1 + u2) / 2.0
 center_4_int(u1, u2, u3, u4) = (-u1 + 9*u2 + 9*u3 - u4) / 16.0
-center_6_int(u1, u2, u3, u4, u5, u6) = (-u1 + 9*u2 - 45*u3 + 45*u4 - 9*u5 + u6) / 64.0
+center_6_int(u1, u2, u3, u4, u5, u6) = (3*u1 - 25*u2 + 150*u3 + 150*u4 - 25*u5 + 3*u6) / 256.0
 
 function intx(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 
@@ -45,7 +45,7 @@ function int_2_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i-1, j, k], ub[i+1, j, k])
+                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i+1, j, k])
             end
         end
     end
@@ -63,7 +63,7 @@ function int_2_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i, j-1, k], ub[i, j+1, k])
+                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j+1, k])
             end
         end
     end
@@ -81,7 +81,7 @@ function int_2_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i, j, k-1], ub[i, j, k+1])
+                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j, k+1])
             end
         end
     end
@@ -99,7 +99,7 @@ function int_4_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i-2, j, k], ub[i-1, j, k], ub[i+1, j, k], ub[i+2, j, k])
+                intu[i, j, k] = center_4_int(ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k])
             end
         end
     end
@@ -117,7 +117,7 @@ function int_4_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i, j-2, k], ub[i, j-1, k],ub[i, j+1, k], ub[i, j+2, k])
+                intu[i, j, k] = center_4_int(ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k])
             end
         end
     end
@@ -135,7 +135,7 @@ function int_4_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k+1], ub[i, j, k+2])
+                intu[i, j, k] = center_4_int(ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2])
             end
         end
     end
@@ -153,7 +153,7 @@ function int_6_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i-3, j, k], ub[i-2, j, k], ub[i-1, j, k], ub[i+1, j, k], ub[i+2, j, k], ub[i+3, j, k])
+                intu[i, j, k] = center_6_int(ub[i-2, j, k], ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k], ub[i+3, j, k])
             end
         end
     end
@@ -171,7 +171,7 @@ function int_6_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i, j-3, k], ub[i, j-2, k],ub[i, j-1, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k])
+                intu[i, j, k] = center_6_int(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k])
             end
         end
     end
@@ -189,7 +189,7 @@ function int_6_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i, j, k-3], ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k+1], ub[i, j, k+2], ub[i, j, k+3])
+                intu[i, j, k] = center_6_int(ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2], ub[i, j, k+3])
             end
         end
     end
