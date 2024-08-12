@@ -58,6 +58,9 @@ Compute interpolated values using different schemes.
   - `4`: 6th-order compact interpolation
 - `boundary::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain. Default is `[0, 0, 0, 0, 0, 0]`.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - The interpolated values as per the selected scheme.
@@ -71,16 +74,16 @@ The `intx` function applies interpolation to the input data `u` using one of the
 
 The function also takes into account boundary conditions specified by the `boundary` and `dirichlet` arrays.
 """
-function intx(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function intx(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間
-        return int_2_x(u, boundary, dirichlet)
+        return int_2_x(u, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間
-        return int_4_x(u, boundary, dirichlet)
+        return int_4_x(u, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間
-        return int_6_x(u, boundary, dirichlet)
+        return int_6_x(u, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間
-        return compact_6_intx(u, boundary, dirichlet)
+        return compact_6_intx(u, boundary, dirichlet, mode)
     end
 end
 
@@ -96,6 +99,9 @@ Compute interpolated values along the y-direction using different schemes.
   - `4`: 6th-order compact interpolation
 - `boundary::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain. Default is `[0, 0, 0, 0, 0, 0]`.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - The interpolated values along the y-direction as per the selected scheme.
@@ -109,16 +115,16 @@ The `inty` function applies interpolation to the input data `u` along the y-dire
 
 The function also considers boundary conditions specified by the `boundary` and `dirichlet` arrays.
 """
-function inty(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function inty(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間
-        return int_2_y(u, boundary, dirichlet)
+        return int_2_y(u, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間
-        return int_4_y(u, boundary, dirichlet)
+        return int_4_y(u, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間
-        return int_6_y(u, boundary, dirichlet)
+        return int_6_y(u, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間
-        return compact_6_inty(u, boundary, dirichlet)
+        return compact_6_inty(u, boundary, dirichlet, mode)
     end
 end
 
@@ -134,6 +140,9 @@ Compute interpolated values along the z-direction using different schemes.
   - `4`: 6th-order compact interpolation
 - `boundary::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain. Default is `[0, 0, 0, 0, 0, 0]`.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - The interpolated values along the z-direction as per the selected scheme.
@@ -147,16 +156,16 @@ The `intz` function applies interpolation to the input data `u` along the z-dire
 
 The function also considers boundary conditions specified by the `boundary` and `dirichlet` arrays.
 """
-function intz(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function intz(u, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間
-        return int_2_z(u, boundary, dirichlet)
+        return int_2_z(u, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間
-        return int_4_z(u, boundary, dirichlet)
+        return int_4_z(u, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間
-        return int_6_z(u, boundary, dirichlet)
+        return int_6_z(u, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間
-        return compact_6_intz(u, boundary, dirichlet)
+        return compact_6_intz(u, boundary, dirichlet, mode)
     end
 end
 
@@ -167,6 +176,7 @@ Perform 2nd-order central interpolation in the x-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the x-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the x-direction using 2nd-order central interpolation.
@@ -176,7 +186,7 @@ The `int_2_x` function applies 2nd-order central interpolation along the x-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_2_x(u, b, dirichlet)
+function int_2_x(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -186,7 +196,11 @@ function int_2_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i+1, j, k])
+                if mode == 1
+                    intu[i, j, k] = center_2_int(ub[i, j, k], ub[i+1, j, k])
+                else
+                    intu[i, j, k] = center_2_int(ub[i-1, j, k], ub[i, j, k])
+                end
             end
         end
     end
@@ -201,6 +215,7 @@ Perform 2nd-order central interpolation in the y-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the y-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the y-direction using 2nd-order central interpolation.
@@ -210,7 +225,7 @@ The `int_2_y` function applies 2nd-order central interpolation along the y-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_2_y(u, b, dirichlet)
+function int_2_y(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -220,7 +235,11 @@ function int_2_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j+1, k])
+                if mode == 1
+                    intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j+1, k])
+                else
+                    intu[i, j, k] = center_2_int(ub[i, j-1, k], ub[i, j, k])
+                end
             end
         end
     end
@@ -235,6 +254,7 @@ Perform 2nd-order central interpolation in the z-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the z-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the z-direction using 2nd-order central interpolation.
@@ -244,7 +264,7 @@ The `int_2_z` function applies 2nd-order central interpolation along the z-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_2_z(u, b, dirichlet)
+function int_2_z(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -254,7 +274,11 @@ function int_2_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j, k+1])
+                if mode == 1
+                    intu[i, j, k] = center_2_int(ub[i, j, k], ub[i, j, k+1])
+                else
+                    intu[i, j, k] = center_2_int(ub[i, j, k-1], ub[i, j, k])
+                end
             end
         end
     end
@@ -269,6 +293,7 @@ Perform 4th-order central interpolation in the x-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the x-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the x-direction using 4th-order central interpolation.
@@ -278,7 +303,7 @@ The `int_4_x` function applies 4th-order central interpolation along the x-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_4_x(u, b, dirichlet)
+function int_4_x(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -288,7 +313,11 @@ function int_4_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k])
+                if mode == 1
+                    intu[i, j, k] = center_4_int(ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k])
+                else
+                    intu[i, j, k] = center_4_int(ub[i-2, j, k], ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k])
+                end
             end
         end
     end
@@ -303,6 +332,7 @@ Perform 4th-order central interpolation in the y-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the y-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the y-direction using 4th-order central interpolation.
@@ -312,7 +342,7 @@ The `int_4_y` function applies 4th-order central interpolation along the y-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_4_y(u, b, dirichlet)
+function int_4_y(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -322,7 +352,11 @@ function int_4_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k])
+                if mode == 1
+                    intu[i, j, k] = center_4_int(ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k])
+                else
+                    intu[i, j, k] = center_4_int(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k])
+                end
             end
         end
     end
@@ -337,6 +371,7 @@ Perform 4th-order central interpolation in the z-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the z-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the z-direction using 4th-order central interpolation.
@@ -346,7 +381,7 @@ The `int_4_z` function applies 4th-order central interpolation along the z-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_4_z(u, b, dirichlet)
+function int_4_z(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -356,7 +391,11 @@ function int_4_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_4_int(ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2])
+                if mode == 1
+                    intu[i, j, k] = center_4_int(ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2])
+                else
+                    intu[i, j, k] = center_4_int(ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1])
+                end
             end
         end
     end
@@ -371,6 +410,7 @@ Perform 6th-order central interpolation in the x-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the x-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the x-direction using 6th-order central interpolation.
@@ -380,7 +420,7 @@ The `int_6_x` function applies 6th-order central interpolation along the x-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_6_x(u, b, dirichlet)
+function int_6_x(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -390,7 +430,11 @@ function int_6_x(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i-2, j, k], ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k], ub[i+3, j, k])
+                if mode == 1
+                    intu[i, j, k] = center_6_int(ub[i-2, j, k], ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k], ub[i+3, j, k])
+                else
+                    intu[i, j, k] = center_6_int(ub[i-3, j, k], ub[i-2, j, k], ub[i-1, j, k], ub[i, j, k], ub[i+1, j, k], ub[i+2, j, k])
+                end
             end
         end
     end
@@ -405,6 +449,7 @@ Perform 6th-order central interpolation in the y-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the y-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the y-direction using 6th-order central interpolation.
@@ -414,7 +459,7 @@ The `int_6_y` function applies 6th-order central interpolation along the y-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_6_y(u, b, dirichlet)
+function int_6_y(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -424,7 +469,11 @@ function int_6_y(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k])
+                if mode == 1
+                    intu[i, j, k] = center_6_int(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k])
+                else
+                    intu[i, j, k] = center_6_int(ub[i, j-3, k], ub[i, j-2, k],ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k])
+                end
             end
         end
     end
@@ -439,6 +488,7 @@ Perform 6th-order central interpolation in the z-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `b::Array{T, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain in the z-direction.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `intu::Array{T}`: Interpolated 3D array along the z-direction using 6th-order central interpolation.
@@ -448,7 +498,7 @@ The `int_6_z` function applies 6th-order central interpolation along the z-direc
 
 Boundary conditions specified by `b` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function int_6_z(u, b, dirichlet)
+function int_6_z(u, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intu = zeros(nx, ny, nz)
@@ -458,7 +508,11 @@ function int_6_z(u, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intu[i, j, k] = center_6_int(ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2], ub[i, j, k+3])
+                if mode == 1
+                    intu[i, j, k] = center_6_int(ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2], ub[i, j, k+3])
+                else
+                    intu[i, j, k] = center_6_int(ub[i, j, k-3], ub[i, j, k-2], ub[i, j, k-1], ub[i, j, k], ub[i, j, k+1], ub[i, j, k+2])
+                end
             end
         end
     end

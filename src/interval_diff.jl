@@ -99,6 +99,9 @@ Compute the first derivative of a 3D array using different numerical differentia
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the x-direction, computed using the selected scheme.
@@ -122,16 +125,16 @@ derivative = int_d1x(u, dx, scheme=2, boundary=boundary, dirichlet=dirichlet)
 println(derivative)
 ````
 """
-function int_d1x(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function int_d1x(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間差分
-        return center_int_2_d1x(u, dx, boundary, dirichlet)
+        return center_int_2_d1x(u, dx, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間差分
-        return center_int_4_d1x(u, dx, boundary, dirichlet)
+        return center_int_4_d1x(u, dx, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間差分
-        return center_int_6_d1x(u, dx, boundary, dirichlet)
+        return center_int_6_d1x(u, dx, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間差分
-        return compact_6_int_d1x(u, dx, boundary, dirichlet)
+        return compact_6_int_d1x(u, dx, boundary, dirichlet, mode)
     end
 end
 
@@ -151,6 +154,9 @@ Compute the first derivative of a 3D array using different numerical differentia
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the y-direction, computed using the selected scheme.
@@ -174,16 +180,16 @@ derivative = int_d1y(u, dx, scheme=2, boundary=boundary, dirichlet=dirichlet)
 println(derivative)
 ````
 """
-function int_d1y(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function int_d1y(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間差分
-        return center_int_2_d1y(u, dx, boundary, dirichlet)
+        return center_int_2_d1y(u, dx, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間差分
-        return center_int_4_d1y(u, dx, boundary, dirichlet)
+        return center_int_4_d1y(u, dx, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間差分
-        return center_int_6_d1y(u, dx, boundary, dirichlet)
+        return center_int_6_d1y(u, dx, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間差分
-        return compact_6_int_d1y(u, dx, boundary, dirichlet)
+        return compact_6_int_d1y(u, dx, boundary, dirichlet, mode)
     end
 end
 
@@ -203,6 +209,9 @@ Compute the first derivative of a 3D array using different numerical differentia
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting. The options are:
+  - `1`: Forward interpolation
+  - `2`: Reverse interpolation
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the z-direction, computed using the selected scheme.
@@ -226,16 +235,16 @@ derivative = int_d1z(u, dx, scheme=2, boundary=boundary, dirichlet=dirichlet)
 println(derivative)
 ````
 """
-function int_d1z(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+function int_d1z(u, dx, scheme=1, boundary=[0, 0, 0, 0, 0, 0], dirichlet=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], mode=1)
 
     if scheme == 1 #2次中心補間差分
-        return center_int_2_d1z(u, dx, boundary, dirichlet)
+        return center_int_2_d1z(u, dx, boundary, dirichlet, mode)
     elseif scheme == 2 #4次中心補間差分
-        return center_int_4_d1z(u, dx, boundary, dirichlet)
+        return center_int_4_d1z(u, dx, boundary, dirichlet, mode)
     elseif scheme == 3 #6次中心補間差分
-        return center_int_6_d1z(u, dx, boundary, dirichlet)
+        return center_int_6_d1z(u, dx, boundary, dirichlet, mode)
     elseif scheme == 4 #6次compact補間差分
-        return compact_6_int_d1z(u, dx, boundary, dirichlet)
+        return compact_6_int_d1z(u, dx, boundary, dirichlet, mode)
     end
 end
 
@@ -250,6 +259,7 @@ Compute the first derivative of a 3D array using a 2nd-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the x-direction computed using a 2nd-order central difference scheme.
@@ -263,11 +273,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_2_d1x(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_2_d1x(u, dx, b, dirichlet, mode)
 println(derivative)
 ````
 """
-function center_int_2_d1x(u, dx, b, dirichlet)
+function center_int_2_d1x(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -277,7 +288,11 @@ function center_int_2_d1x(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i+1, j, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i+1, j, k], dx)
+                else
+                    intdu[i, j, k] = center_2_intdiff(ub[i-1, j, k], ub[i, j, k], dx)
+                end
             end
         end
     end
@@ -296,6 +311,7 @@ Compute the first derivative of a 3D array using a 4th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the x-direction computed using a 4th-order central difference scheme.
@@ -309,11 +325,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_4_d1x(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_4_d1x(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_4_d1x(u, dx, b, dirichlet)
+function center_int_4_d1x(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -323,7 +340,11 @@ function center_int_4_d1x(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_4_intdiff(ub[i-1, j, k], ub[i, j, k],ub[i+1, j, k], ub[i+2, j, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_4_intdiff(ub[i-1, j, k], ub[i, j, k],ub[i+1, j, k], ub[i+2, j, k], dx)
+                else
+                    intdu[i, j, k] = center_4_intdiff(ub[i-2, j, k], ub[i-1, j, k],ub[i, j, k], ub[i+1, j, k], dx)
+                end
             end
         end
     end
@@ -342,6 +363,7 @@ Compute the first derivative of a 3D array using a 6th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the x-direction computed using a 6th-order central difference scheme.
@@ -355,11 +377,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_6_d1x(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_6_d1x(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_6_d1x(u, dx, b, dirichlet)
+function center_int_6_d1x(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -369,7 +392,11 @@ function center_int_6_d1x(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_6_intdiff(ub[i-2, j, k], ub[i-1, j, k],ub[i, j, k], ub[i+1, j, k],ub[i+2, j, k], ub[i+3, j, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_6_intdiff(ub[i-2, j, k], ub[i-1, j, k],ub[i, j, k], ub[i+1, j, k],ub[i+2, j, k], ub[i+3, j, k], dx)
+                else
+                    intdu[i, j, k] = center_6_intdiff(ub[i-3, j, k], ub[i-2, j, k],ub[i-1, j, k], ub[i, j, k],ub[i+1, j, k], ub[i+2, j, k], dx)
+                end
             end
         end
     end
@@ -388,6 +415,7 @@ Compute the first derivative of a 3D array using a 2nd-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the y-direction computed using a 2nd-order central difference scheme.
@@ -401,11 +429,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_2_d1y(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_2_d1y(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_2_d1y(u, dx, b, dirichlet)
+function center_int_2_d1y(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -415,7 +444,11 @@ function center_int_2_d1y(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i, j+1, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i, j+1, k], dx)
+                else
+                    intdu[i, j, k] = center_2_intdiff(ub[i, j-1, k], ub[i, j, k], dx)
+                end
             end
         end
     end
@@ -434,6 +467,7 @@ Compute the first derivative of a 3D array using a 4th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the y-direction computed using a 4th-order central difference scheme.
@@ -447,11 +481,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_4_d1y(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_4_d1y(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_4_d1y(u, dx, b, dirichlet)
+function center_int_4_d1y(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -461,7 +496,11 @@ function center_int_4_d1y(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_4_intdiff(ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_4_intdiff(ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k], dx)
+                else
+                    intdu[i, j, k] = center_4_intdiff(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k], dx)
+                end
             end
         end
     end
@@ -480,6 +519,7 @@ Compute the first derivative of a 3D array using a 6th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the y-direction computed using a 6th-order central difference scheme.
@@ -493,11 +533,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_6_d1y(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_6_d1y(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_6_d1y(u, dx, b, dirichlet)
+function center_int_6_d1y(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -507,7 +548,11 @@ function center_int_6_d1y(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_6_intdiff(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_6_intdiff(ub[i, j-2, k], ub[i, j-1, k],ub[i, j, k], ub[i, j+1, k],ub[i, j+2, k], ub[i, j+3, k], dx)
+                else
+                    intdu[i, j, k] = center_6_intdiff(ub[i, j-3, k], ub[i, j-2, k],ub[i, j-1, k], ub[i, j, k],ub[i, j+1, k], ub[i, j+2, k], dx)
+                end
             end
         end
     end
@@ -526,6 +571,7 @@ Compute the first derivative of a 3D array using a 2nd-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the z-direction computed using a 2nd-order central difference scheme.
@@ -539,11 +585,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_2_d1z(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_2_d1z(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_2_d1z(u, dx, b, dirichlet)
+function center_int_2_d1z(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -553,7 +600,11 @@ function center_int_2_d1z(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i, j, k+1], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_2_intdiff(ub[i, j, k], ub[i, j, k+1], dx)
+                else
+                    intdu[i, j, k] = center_2_intdiff(ub[i, j, k-1], ub[i, j, k], dx)
+                end
             end
         end
     end
@@ -572,6 +623,7 @@ Compute the first derivative of a 3D array using a 4th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the z-direction computed using a 4th-order central difference scheme.
@@ -585,11 +637,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_4_d1z(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_4_d1z(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_4_d1z(u, dx, b, dirichlet)
+function center_int_4_d1z(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -599,7 +652,11 @@ function center_int_4_d1z(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_4_intdiff(ub[i, j, k-1], ub[i, j, k],ub[i, j, k+1], ub[i, j, k+2], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_4_intdiff(ub[i, j, k-1], ub[i, j, k],ub[i, j, k+1], ub[i, j, k+2], dx)
+                else
+                    intdu[i, j, k] = center_4_intdiff(ub[i, j, k-2], ub[i, j, k-1],ub[i, j, k], ub[i, j, k+1], dx)
+                end
             end
         end
     end
@@ -618,6 +675,7 @@ Compute the first derivative of a 3D array using a 6th-order central difference 
   - `1`: Neumann boundary condition.
   - `2`: Dirichlet boundary condition.
 - `dirichlet::Array{T, 1}`: Values for Dirichlet boundary conditions. Default is `[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]`.
+- `mode :: Int`: Forward or reverse setting.
 
 # Returns
 - `Array{T, 3}`: 3D array of the first derivative of `u` in the z-direction computed using a 6th-order central difference scheme.
@@ -631,11 +689,12 @@ u = rand(10, 10, 10)
 dx = 0.1
 b = [0, 0, 0, 0, 0, 0]
 dirichlet = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-derivative = center_int_6_d1z(u, dx, b, dirichlet)
+mode = 1
+derivative = center_int_6_d1z(u, dx, b, dirichlet, mode)
 println(derivative)
 ```
 """
-function center_int_6_d1z(u, dx, b, dirichlet)
+function center_int_6_d1z(u, dx, b, dirichlet, mode)
 
     nx, ny, nz = size(u)
     intdu = zeros(nx, ny, nz)
@@ -645,7 +704,11 @@ function center_int_6_d1z(u, dx, b, dirichlet)
     for k in 1:nz
         for j in 1:ny
             for i in 1:nx
-                intdu[i, j, k] = center_6_intdiff(ub[i, j, k-2], ub[i, j, k-1],ub[i, j, k], ub[i, j, k+1],ub[i, j, k+2], ub[i, j, k+3], dx)
+                if mode == 1
+                    intdu[i, j, k] = center_6_intdiff(ub[i, j, k-2], ub[i, j, k-1],ub[i, j, k], ub[i, j, k+1],ub[i, j, k+2], ub[i, j, k+3], dx)
+                else
+                    intdu[i, j, k] = center_6_intdiff(ub[i, j, k-3], ub[i, j, k-2],ub[i, j, k-1], ub[i, j, k],ub[i, j, k+1], ub[i, j, k+2], dx)
+                end
             end
         end
     end

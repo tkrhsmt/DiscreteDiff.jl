@@ -5,6 +5,7 @@ Perform 6th-order compact finite difference interpolation in the x-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting
 
 # Returns
 - `du::Array{T}`: Interpolated 3D array of values in the x-direction using 6th-order compact finite difference interpolation.
@@ -20,7 +21,7 @@ The coefficients for the tridiagonal system are defined by the constants `α`, `
 
 Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function compact_6_intx(u, bo, dirichlet)
+function compact_6_intx(u, bo, dirichlet, mode)
 
     nx, ny, nz = size(u)
     du = zeros(nx, ny, nz)
@@ -42,10 +43,17 @@ function compact_6_intx(u, bo, dirichlet)
             Ac = ones(nx) * α
 
             for i in 1:nx
-                B[i] = (a * (ub[i+1, j, k] + ub[i, j, k])
-                        + b * (ub[i+2, j, k] + ub[i-1, j, k])
-                        + c * (ub[i+3, j, k] + ub[i-2, j, k])
-                        + d * (ub[i+4, j, k] + ub[i-3, j, k]))
+                if mode == 1
+                    B[i] = (a * (ub[i+1, j, k] + ub[i, j, k])
+                            + b * (ub[i+2, j, k] + ub[i-1, j, k])
+                            + c * (ub[i+3, j, k] + ub[i-2, j, k])
+                            + d * (ub[i+4, j, k] + ub[i-3, j, k]))
+                else
+                    B[i] = (a * (ub[i, j, k] + ub[i-1, j, k])
+                            + b * (ub[i+1, j, k] + ub[i-2, j, k])
+                            + c * (ub[i+2, j, k] + ub[i-3, j, k])
+                            + d * (ub[i+3, j, k] + ub[i-4, j, k]))
+                end
             end
 
             if bo[1] == 0 #周期境界条件
@@ -77,6 +85,7 @@ Perform 6th-order compact finite difference interpolation in the y-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting
 
 # Returns
 - `du::Array{T}`: Interpolated 3D array of values in the y-direction using 6th-order compact finite difference interpolation.
@@ -92,7 +101,7 @@ The coefficients for the tridiagonal system are defined by the constants `α`, `
 
 Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function compact_6_inty(u, bo, dirichlet)
+function compact_6_inty(u, bo, dirichlet, mode)
 
     nx, ny, nz = size(u)
     du = zeros(nx, ny, nz)
@@ -114,10 +123,17 @@ function compact_6_inty(u, bo, dirichlet)
             Ac = ones(ny) * α
 
             for j in 1:ny
-                B[j] = (a * (ub[i, j+1, k] + ub[i, j, k])
-                        + b * (ub[i, j+2, k] + ub[i, j-1, k])
-                        + c * (ub[i, j+3, k] + ub[i, j-2, k])
-                        + d * (ub[i, j+4, k] + ub[i, j-3, k]))
+                if mode == 1
+                    B[j] = (a * (ub[i, j+1, k] + ub[i, j, k])
+                            + b * (ub[i, j+2, k] + ub[i, j-1, k])
+                            + c * (ub[i, j+3, k] + ub[i, j-2, k])
+                            + d * (ub[i, j+4, k] + ub[i, j-3, k]))
+                else
+                    B[j] = (a * (ub[i, j, k] + ub[i, j-1, k])
+                            + b * (ub[i, j+1, k] + ub[i, j-2, k])
+                            + c * (ub[i, j+2, k] + ub[i, j-3, k])
+                            + d * (ub[i, j+3, k] + ub[i, j-4, k]))
+                end
             end
 
             if bo[3] == 0 #周期境界条件
@@ -149,6 +165,7 @@ Perform 6th-order compact finite difference interpolation in the z-direction.
 - `u::Array{T}`: Input 3D array of values to be interpolated. Type `T` should be compatible with the interpolation function.
 - `bo::Array{Int, 1}`: Array of boundary conditions. Length should be 6, corresponding to the boundary conditions on each edge of the domain.
 - `dirichlet::Array{T, 1}`: Array of Dirichlet boundary conditions. Length should be 6.
+- `mode :: Int`: Forward or reverse setting
 
 # Returns
 - `du::Array{T}`: Interpolated 3D array of values in the z-direction using 6th-order compact finite difference interpolation.
@@ -164,7 +181,7 @@ The coefficients for the tridiagonal system are defined by the constants `α`, `
 
 Boundary conditions specified by `bo` and Dirichlet boundary conditions specified by `dirichlet` are applied to handle the edges of the domain.
 """
-function compact_6_intz(u, bo, dirichlet)
+function compact_6_intz(u, bo, dirichlet, mode)
 
     nx, ny, nz = size(u)
     du = zeros(nx, ny, nz)
@@ -186,10 +203,17 @@ function compact_6_intz(u, bo, dirichlet)
             Ac = ones(nz) * α
 
             for k in 1:nz
-                B[k] = (a * (ub[i, j, k+1] + ub[i, j, k])
-                        + b * (ub[i, j, k+2] + ub[i, j, k-1])
-                        + c * (ub[i, j, k+3] + ub[i, j, k-2])
-                        + d * (ub[i, j, k+4] + ub[i, j, k-3]))
+                if mode == 1
+                    B[k] = (a * (ub[i, j, k+1] + ub[i, j, k])
+                            + b * (ub[i, j, k+2] + ub[i, j, k-1])
+                            + c * (ub[i, j, k+3] + ub[i, j, k-2])
+                            + d * (ub[i, j, k+4] + ub[i, j, k-3]))
+                else
+                    B[k] = (a * (ub[i, j, k] + ub[i, j, k-1])
+                    + b * (ub[i, j, k+1] + ub[i, j, k-2])
+                    + c * (ub[i, j, k+2] + ub[i, j, k-3])
+                    + d * (ub[i, j, k+3] + ub[i, j, k-4]))
+                end
             end
 
             if bo[5] == 0 #周期境界条件
