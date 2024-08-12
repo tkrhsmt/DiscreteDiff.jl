@@ -98,19 +98,26 @@ d2x(u, dx, scheme,  boundary, dirichlet)
 ### 中心補間
 
 ```julia
-intx(u, scheme,  boundary, dirichlet)
+intx(u, scheme,  boundary, dirichlet, mode)
 ```
 
 それぞれの項目は，1階微分と同じです．
 `dx`が省略されていますが，補間場所は全て中心が使用されるためです．
+`mode`は前進補間，および後退補間を選択できます．
+- `1` : 前進補間
+- `2` : 後退補間
 
 同様にして，y方向に`inty`，z方向に`intz`関数が使用できます．
 
 ### 1階中心補間差分
 
 ```julia
-int_d1x(u, dx, scheme,  boundary, dirichlet)
+int_d1x(u, dx, scheme,  boundary, dirichlet, mode)
 ```
 
 それぞれの項目は，1階微分と同じです．
+`mode`は前進補間，および後退補間を選択できます．
+- `1` : 前進補間
+- `2` : 後退補間
+
 同様にして，y方向の差分に`int_d1y`，z方向の差分に`int_d1z`関数が使用できます．
